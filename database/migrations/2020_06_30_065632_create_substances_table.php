@@ -16,6 +16,7 @@ class CreateSubstancesTable extends Migration
         Schema::create('substances', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name');
+            $table->string('visible')->default('true');
             $table->timestamps();
         });
     }

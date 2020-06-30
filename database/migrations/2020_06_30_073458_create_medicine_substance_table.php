@@ -17,10 +17,10 @@ class CreateMedicineSubstanceTable extends Migration
             $table->bigIncrements('id');
 
             $table->bigInteger('medicine_id')->unsigned()->default(1);
-            $table->foreign('medicine_id')->references('id')->on('medicines');
+            $table->foreign('medicine_id')->references('id')->on('medicines')->onDelete('cascade');
 
             $table->bigInteger('substance_id')->unsigned()->default(1);
-            $table->foreign('substance_id')->references('id')->on('substances');
+            $table->foreign('substance_id')->references('id')->on('substances')->onDelete('cascade');
         });
     }
 
