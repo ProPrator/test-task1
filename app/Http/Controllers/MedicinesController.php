@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Medicine;
+use App\Substance;
 use Illuminate\Http\Request;
 
 class MedicinesController extends Controller
@@ -22,7 +23,6 @@ class MedicinesController extends Controller
     public function deleted($id)
     {
         $medicine = Medicine::find($id);
-
         $medicine->forceDelete();
 
         return redirect()->route('medicines');
@@ -33,15 +33,10 @@ class MedicinesController extends Controller
         $medicine = Medicine::withTrashed()->find($id);
 
         if (!$medicine->deleted_at) {
-            $medicine->substances()->delete();
             $medicine->delete();
         } else {
             $medicine->restore();
-            $medicine->substances()->restore();
         }
-
-        $medicine->save();
-
         return redirect()->route('medicines');
     }
 
@@ -60,7 +55,29 @@ class MedicinesController extends Controller
             $medicine->name = $request->input('name');
             $medicine->save();
         }
-
         return redirect()->route('medicines');
+    }
+
+    public function add(Request $request)
+    {
+        if ($request->isMethod('get')) {
+            $substances = Substance::all();
+            return view('admin.addMedicine', compact('substances'));
+        } else {
+            $medicine = new Medicine();
+            $medicine->name = $request->input('name');
+
+            $substances = [];
+
+            foreach ($request->input() as $key => $elem) {
+                if (is_numeric($key)) {
+                    $substances[] = $key;
+                }
+            }
+            $medicine->save();
+            $medicine->substances()->attach($substances);
+
+            return redirect()->route('medicines');
+        }
     }
 }

@@ -4,6 +4,7 @@
 
     <a href="/">На главную</a>
     <a href="/substances">Все вещества</a>
+    <a href="/medicines/add">Добавить лекарство</a>
     <table>
         <thead>
         <tr>

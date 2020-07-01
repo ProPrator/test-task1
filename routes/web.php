@@ -20,11 +20,11 @@ Route::get('/medicines/deleted/{id}', 'MedicinesController@deleted');
 Route::get('/medicines/visible/{id}', 'MedicinesController@visible');
 Route::get('/medicines/edit/{id}', 'MedicinesController@edit');
 Route::post('/medicines/edit/{id}', 'MedicinesController@save');
-
-
+Route::match(['post', 'get'],'/medicines/add', 'MedicinesController@add');
 
 Route::get('/substances', 'SubstancesController@showAll')->name('substances');
 Route::get('/substances/deleted/{id}', 'SubstancesController@deleted');
 Route::get('/substances/visible/{id}', 'SubstancesController@visible');
 Route::get('/substances/edit/{id}', 'SubstancesController@edit');
 Route::post('/substances/edit/{id}', 'SubstancesController@save');
+Route::match(['post', 'get'],'/substances/add', 'SubstancesController@add');

@@ -17,7 +17,6 @@ class SubstancesController extends Controller
     public function deleted($id)
     {
         $substance = Substance::find($id);
-
         $substance->forceDelete();
 
         return redirect()->route('substances');
@@ -52,7 +51,20 @@ class SubstancesController extends Controller
             $substance->name = $request->input('name');
             $substance->save();
         }
-
         return redirect()->route('substances');
+    }
+
+    public function add(Request $request)
+    {
+        if ($request->isMethod('get')) {
+            return view('admin.addSubstance');
+        } else {
+            if ($request->name) {
+                $substance = new Substance();
+                $substance->name = $request->input('name');
+                $substance->save();
+            }
+            return redirect()->route('substances');
+        }
     }
 }
