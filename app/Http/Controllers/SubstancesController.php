@@ -9,7 +9,7 @@ class SubstancesController extends Controller
 {
     public function showAll()
     {
-        $substances = Substance::paginate(10);
+        $substances = Substance::withTrashed()->paginate(10);
 
         return view('admin.substances', compact('substances'));
     }
@@ -18,23 +18,22 @@ class SubstancesController extends Controller
     {
         $substance = Substance::find($id);
 
-        $substance->delete();
+        $substance->forceDelete();
 
         return redirect()->route('substances');
     }
 
     public function visible($id)
     {
-        $substance = Substance::find($id);
+        $substance = Substance::withTrashed()->find($id);
 
-        if ($substance->visible) {
-            $substance->visible = false;
+        if (!$substance->deleted_at) {
+            $substance->medicines()->delete();
+            $substance->delete();
         } else {
-            $substance->visible = true;
+            $substance->restore();
+            $substance->medicines()->restore();
         }
-
-        $substance->save();
-
         return redirect()->route('substances');
     }
 

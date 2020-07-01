@@ -23,7 +23,7 @@
                 <td>{{ $medicine->name }}</td>
                 <td>{{ $medicine->created_at }}</td>
                 <td>{{ $medicine->updated_at }}</td>
-                <td><a href="/medicines/visible/{{ $medicine->id }}">{{ $medicine->visible ? 'Видимое' : 'Скрыто' }}</a></td>
+                <td><a href="/medicines/visible/{{ $medicine->id }}">{{ $medicine->deleted_at ? 'Скрыто' : 'Видимое' }}</a></td>
                 <td><a href="/medicines/edit/{{ $medicine->id }}">редактировать</a></td>
                 <td><a href="/medicines/deleted/{{ $medicine->id }}">удалить</a></td>
             </tr>

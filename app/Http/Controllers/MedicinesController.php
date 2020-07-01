@@ -14,7 +14,7 @@ class MedicinesController extends Controller
 
     public function showAll()
     {
-        $medicines = Medicine::paginate(10);
+        $medicines = Medicine::withTrashed()->paginate(10);
 
         return view('admin.medicines', compact('medicines'));
     }
@@ -23,19 +23,21 @@ class MedicinesController extends Controller
     {
         $medicine = Medicine::find($id);
 
-        $medicine->delete();
+        $medicine->forceDelete();
 
         return redirect()->route('medicines');
     }
 
     public function visible($id)
     {
-        $medicine = Medicine::find($id);
+        $medicine = Medicine::withTrashed()->find($id);
 
-        if ($medicine->visible) {
-            $medicine->visible = false;
+        if (!$medicine->deleted_at) {
+            $medicine->substances()->delete();
+            $medicine->delete();
         } else {
-            $medicine->visible = true;
+            $medicine->restore();
+            $medicine->substances()->restore();
         }
 
         $medicine->save();

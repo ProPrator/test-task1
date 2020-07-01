@@ -24,7 +24,7 @@
                 <td>{{ $substance->name }}</td>
                 <td>{{ $substance->created_at }}</td>
                 <td>{{ $substance->updated_at }}</td>
-                <td><a href="/substances/visible/{{ $substance->id }}">{{ $substance->visible ? 'Видимое' : 'Скрыто' }}</a></td>
+                <td><a href="/substances/visible/{{ $substance->id }}">{{ $substance->deleted_at ? 'Скрыто' : 'Видимое' }}</a></td>
                 <td><a href="/substances/edit/{{ $substance->id }}">редактировать</a></td>
                 <td><a href="/substances/deleted/{{ $substance->id }}">удалить</a></td>
             </tr>

@@ -16,8 +16,8 @@ class CreateMedicinesTable extends Migration
         Schema::create('medicines', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name');
-            $table->string('visible')->default('true');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
